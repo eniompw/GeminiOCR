@@ -3,7 +3,7 @@ import os  # For file path manipulation
 import google.generativeai as genai
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = './'
+app.config['UPLOAD_FOLDER'] = '/tmp'
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 @app.route('/', methods=['GET', 'POST'])
