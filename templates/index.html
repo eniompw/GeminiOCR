@@ -1,0 +1,32 @@
+<link href="/static/styles.css" rel="stylesheet">
+<h2> Gemini API Steam Demo </h2>
+<div id="output"></div>
+<p>
+<form action="/query">
+  <div class="container">
+    <label for="q"><b>Query</b></label>
+    <input type="text" placeholder="Enter Question" name="q" required>
+    <button type="submit">Submit</button>
+  </div>
+  </form>
+<script>
+function getResponse() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText == "END")
+      {
+        clearInterval(interval);
+      }
+      else
+      {
+      document.getElementById("output").innerHTML +=
+      this.responseText;
+      }
+    }
+  };
+  xhttp.open("GET", "/stream", true);
+  xhttp.send();
+}
+const interval = setInterval(getResponse, 1000);
+</script>
