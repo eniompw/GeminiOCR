@@ -10,10 +10,10 @@ genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 def home():
     if request.method == 'POST':
         # Check if a file was uploaded
-        if 'document_attachment_doc' not in request.files:
-            return render_template('index.html') # Redirect to same page if no file
+        if 'input' not in request.files:
+            return render_template('index.html', output="") # Redirect to same page if no file
         # Save image
-        file = request.files['document_attachment_doc']
+        file = request.files['input']
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filepath)
         # Use genai
@@ -22,7 +22,7 @@ def home():
         model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
         text = "OCR this image"
         response = model.generate_content([text, sample_file])
-        return response.text
+        return render_template('index.html', output=response.text)
 
     # Render the form on GET request
     return render_template('index.html')

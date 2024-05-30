@@ -1,28 +1,62 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Upload an image</title>
-    <link href="/static/styles.css" rel="stylesheet">
+  <title>Upload an image</title>
+  <link href="/static/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
+
 <body>
-    <h2>Upload an image</h2>
-    <form method="post" enctype="multipart/form-data">
-      <div class="container">
-        <input type="file" name="document_attachment_doc" id="document_attachment_doc">
-        <input type="submit" value="Upload">
-      </div>
-    </form>
-    </body>
+  <h2><b> Upload an image </b></h2>
+  <p>{{ output|safe }}</p>
+  <form method="post" enctype="multipart/form-data" onsubmit="move()" id="form">
+    <div class="container">
+      <input type="file" name="input" id="input">
+      <input type="submit" value="Upload">
+    </div>
+  </form>
+  <div class="w3-container">
+    <div class="w3-light-grey">
+      <div id="myBar" class="w3-container w3-green w3-center"></div>
+    </div>
+</body>
+
 </html>
 <script>
-const form = document.getElementById("new_document_attachment");
-const fileInput = document.getElementById("document_attachment_doc");
+  const form = document.getElementById("form");
+  const fileInput = document.getElementById("input");
 
-fileInput.addEventListener('change', () => {
-  form.submit();
-});
+  // Listen for both file selection and enter key press
+  fileInput.addEventListener('change', () => {
+    form.submit();
+  });
 
-window.addEventListener('paste', e => {
-  fileInput.files = e.clipboardData.files;
-});
+  window.addEventListener('paste', e => {
+    fileInput.files = e.clipboardData.files;
+  });
+
+  // Listen for Enter key press
+  window.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      move();
+      form.submit();
+    }
+  });
+
+  function move() {
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 50);
+
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + '%';
+        elem.innerHTML = width * 1 + '%';
+      }
+    }
+  }
 </script>
