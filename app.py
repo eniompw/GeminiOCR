@@ -19,7 +19,7 @@ def home():
         # Use genai
         sample_file = genai.upload_file(path=filepath)
         os.remove(filepath)
-        model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
+        model = genai.GenerativeModel(model_name="models/gemini-1.5-flash-002")
         text = "OCR this image"
         response = model.generate_content([text, sample_file])
         return render_template('index.html', output=response.text)
